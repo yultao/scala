@@ -1,4 +1,4 @@
-package tt.lab.scala.spark
+package tt.lab.spark.scala
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
@@ -20,7 +20,7 @@ object FriendsByAge {
   
   /** Our main function where the action happens */
   def main(args: Array[String]) {
-   
+    Utils.setHadoopHome
     // Set the log level to only print errors
     Logger.getLogger("org").setLevel(Level.ERROR)
         

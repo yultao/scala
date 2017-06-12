@@ -1,0 +1,223 @@
+Run CVA CCAR using Autosys jobs
+Configuration
+Update /var/opt/pt/data/ccar/CCAR/CCAR.cfg on marsap1u. This file is used for all jobs. For example, below table is for 2017 Q1 CCAR and PRA run, so the pricing cob date is 20170331, the previous cob date is 20170330 and the last CCAR run is 20170103. We ran 2017 Q1 PRA on UAT so GRID is set to UAT, number of nodes is 1000 for all steps. If running it on production, GRID should be set to SW and number of nodes can be set to 2000 or more.
+PRICING_COB=20170331
+PRICING_PREVCOB=20170330
+PREV_CCAR_COB=20170103
+
+GRID=UAT
+NODE_STEP1=1000
+NODE_STEP2=1000
+NODE_STEP3=1000
+
+There are many other configuration files used by specific job. Right now there is no a centralized place to manage the configuration file. An easy way is to copy the configuration files from previous CCAR and make changes as needed. 
+cp -r /var/opt/pt/data/ccar/CCAR/20170331 /var/opt/pt/data/ccar/CCAR/20170630
+
+Configuration files will be explained in following sections.
+Base
+Below table lists Autosys jobs for Base run and their configuration files. GSM jobs are omitted as they are similar to GCM’s. UAT 155818_CVA_CCAR_BOX contains all CCAR jobs. Each job calls a Korn shell script with the same name as job name in /opt/CorrelationMarsClient/current/bin of marsap1u. For example, job 155818_CVA_CCAR_BASE_PRICING_GCM calls 155818_CVA_CCAR_BASE_PRICING_GCM.ksh. You can check the script to better understand how a configuration file is used.
+Autosy Job	Configuration File
+155818_CVA_CCAR_BOX	 
+155818_CVA_CCAR_BASE_BOX_GCM	BASE/GCM/
+155818_CVA_CCAR_BASE_PRICING_GCM	    price.list
+155818_CVA_CCAR_BASE_BUSINESS_ALLOCATION_GCM	    bizalloc.list
+155818_CVA_CCAR_BASE_GENERATE_FEED_GCM	    feed.list
+155818_CVA_CCAR_BASE_SEND_FEED_GCM	    ftpfeed.list
+155818_CVA_CCAR_BASE_BOX_GSM	BASE/GSM/
+... (similar to 155818_CVA_CCAR_BASE_BOX_GSM)	    
+155818_CVA_CCAR_BASE_GENERATE_RECON	BASE/recon.list 
+155818_CVA_CCAR_BASE_SEND_RECON	BASE/ftprecon.list
+
+For example, Job 155818_CVA_CCAR_BASE_PRICING_GCM uses BASE/GCM/price.list. This file contains all base scenarios for this CCAR. Before running jobs the file content should be configured as below table. 
+UNCOND 
+BASE_18T 
+That means for GCM base run there are two scenarios unconditional (UNCOND) and base 18 tenors (BASE_18T). The scenarios vary with different CCAR according to requirement. For example, in year-end CCAR there are intercompany scenarios for conditional (INTCOM) and unconditional (UNCOND_INTCOM). Check with project manager that what kind of scenarios to run for this CCAR.
+After a scenario is completed, it will be commented out by with a sharp sign (#) in the beginning and the job start time and end time in the end. If a scenario is commented out by # next time when the job is rerun it will be skipped.
+# UNCOND,2017-04-06_14:43:02,2017-04-06_15:33:29
+# BASE_18T,2017-04-10_11:26:26,2017-04-10_12:00:25
+If something wrong during the run and the job needs rerun the configuration file must be reverted back to the original. If there are any netting sets failed and need rerun  this configuration files should be updated to <Scenario>:<Netting Set[,Netting Sent]> for that specific scenarios, for example, let’s say UNCOND has two netting sets failed then the file should be updated as below then rerun the pricing job.
+UNCOND:CBNA-M2-PIM4073-F-27,CBNA-M2-TMP32929-F-4
+# BASE_18T,2017-04-10_11:26:26,2017-04-10_12:00:25
+After finishing rerun it should be appended start time and end time too, something like:
+# UNCOND :CBNA-M2-PIM4073-F-27, CBNA-M2-TMP32929-F-4, 2017-04-06_14:43:02,2017-04-06_15:33:29
+# BASE_18T,2017-04-10_11:26:26,2017-04-10_12:00:25
+Pricing, business allocation and feed generation configuration files are very similar. One thing to be noted is feed and recon sending configuration file. Right now the content should contain the feed xml file names in /var/opt/pt/cva/FEEDS/20170331/, for example:
+icva_gcm.MARS.MARSRT.CCAR.BASE.UNCONDITIONAL_20170331_1_2.xml
+
+In summary, each job for Base run has its own configuration file, before the job is run the configuration file should be set correctly, during the run you can check the file content for progress and timing. In terms of progress it will be very helpful if there are many scenarios to run, for example Sensitivity.
+
+Sensitivity
+Below table lists Autosys jobs for Sensitivity run and their configuration files. Some jobs are omitted as they are very similar to CCR jobs.
+Autosy Job	Configuration File
+155818_CVA_CCAR_BOX	 
+155818_CVA_CCAR_SENSITIVITY_PREPARE_CPTY_RATING	 
+155818_CVA_CCAR_SENSITIVITY_COPY_FILES_GCM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_BOX_GCM	SENSITIVITY/GCM/
+155818_CVA_CCAR_SENSITIVITY_CCR_PREPARE_ISSUER_RATING_GCM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_GENERATE_SCENARIO_GCM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_COPY_SCENARIO_GCM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_PRICING_GCM	CCR_price.list
+155818_CVA_CCAR_SENSITIVITY_CCR_GENERATE_REPORT_GCM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_GENERATE_FEED_GCM	CCR_feed.list
+155818_CVA_CCAR_SENSITIVITY_CCR_SEND_FEED_GCM	CCR_ftpfeed.list
+155818_CVA_CCAR_SENSITIVITY_FX_BOX_GCM	 
+155818_CVA_CCAR_SENSITIVITY_IR_BOX_GCM	 
+155818_CVA_CCAR_SENSITIVITY_SKP1R_BOX_GCM	 
+155818_CVA_CCAR_SENSITIVITY_COPY_FILES_GSM	 
+155818_CVA_CCAR_SENSITIVITY_CCR_BOX_GSM	 
+155818_CVA_CCAR_SENSITIVITY_FX_BOX_GSM	 
+155818_CVA_CCAR_SENSITIVITY_IR_BOX_GSM	 
+155818_CVA_CCAR_SENSITIVITY_SKP1R_BOX_GSM	 
+
+CCR_price.list
+For different scenario group the configuration files are different as the scenarios are very different, and even for the same scenario group for each CCAR the scenarios could change too, so you need to put actual scenarios for that scenario group in the configuration file. Scenarios are generated under UAT /var/opt/pt/data/ccar/cva/scenarios/SENSITIVITY/20170331.
+CCR_feed.list
+Feed are not sent based on each individual scenario, instead the feed is grouped based on bump. For example CCRP1A contains all scenarios that have 1 bps bump for all ratings.
+CCR_ftpfeed.list
+This file should contain all feeds for this scenario group, again, not for individual scenario.
+
+
+Stress
+Below table lists Autosys jobs for Stress run and their configuration files. GSM jobs are omitted as they are similar to GCM’s.
+Autosy Job	Configuration File
+155818_CVA_CCAR_BOX	 
+155818_CVA_CCAR_STRESS_PREPARE_CPTY_SHOCK	cptyshock.list
+155818_CVA_CCAR_STRESS_PREPARE_MARKET_SHOCK	mktshock.list
+155818_CVA_CCAR_STRESS_BOX_GCM	STRESS/GCM/
+155818_CVA_CCAR_STRESS_GENERATE_SCENARIO_GCM	scenario.list
+155818_CVA_CCAR_STRESS_COPY_CDSONCDO_GCM	cdsoncdo.list
+155818_CVA_CCAR_STRESS_SNAPSHOT_GCM	snapshot.list
+155818_CVA_CCAR_STRESS_COPY_SNAPSHOT_TO_UAT_GCM	Not implemented
+155818_CVA_CCAR_STRESS_ADD_VOL_GCM	Update volatility shocks
+155818_CVA_CCAR_STRESS_COPY_SCENARIO_GCM	Not implemented
+155818_CVA_CCAR_STRESS_COPY_SNAPSHOT_TO_PROD_GCM	Not implemented
+155818_CVA_CCAR_STRESS_PRICING_GCM	price.list
+155818_CVA_CCAR_STRESS_BUSINESS_ALLOCATION_GCM	bizalloc.list
+155818_CVA_CCAR_STRESS_GENERATE_REPORT_GCM	report.list and report*.sql
+155818_CVA_CCAR_STRESS_GENERATE_FEED_GCM	feed.list
+155818_CVA_CCAR_STRESS_SEND_FEED_GCM	ftpfeed.list
+155818_CVA_CCAR_STRESS_BOX_GSM	STRESS/GSM/
+ ... (similar to 155818_CVA_CCAR_STRESS_BOX_GCM)	 
+155818_CVA_CCAR_STRESS_GENERATE_RECON	STRESS/recon.list
+155818_CVA_CCAR_STRESS_SEND_RECON	STRESS/ftprecon.list
+
+cptyshock.list 
+It contains counterparty shocks for this CCAR. The shocks are from iCVA, can be for CCAR and PRA. For example for 2017 Q1 PRA they are PRA_REGU, PRA_INT1 and PRA_INT2. For 2016 YE it had BHC_SAMS, BHC_SAMS_IC, FED_AMS, FED_AMS_IC, FED_SAMS and FED_SAMS_IC.
+scenario.list 
+It is used to generate scenario xvars for basic and PAA scenarios. The parameters are scenfrom, scen, category, legalfilter and IC. 
+Parameter	Comments
+scenfrom	PRA|BHC|FED
+scen	PRA: REGU|INT1|INT2
+BHC: AMS|SAMS
+FED: AMS|SAMS
+category	ALL|CPTY|CREDI|CREDIR|CREDIRF|UNDER
+legalfilter	ALL|CGML|CBNA|…
+IC	true|false
+For example,  “PRA,REGU,ALL,CGML,false” means the scenario is for PRA_REGU; it is basic scenario that contains all shocks; it is only for CGML legal entities; it is not for intercompany as IC is false.
+Quiz:
+How to configure a scenario for an intercompany FED_SAMS basic scenario for all legal entities?
+Answer:
+“FED,SAMS,ALL,ALL,true”
+Scenario xvars are originally generated at marsap1u: /var/opt/pt/data/ccar/cva/scenarios/20170331
+Known Issue:
+Scenario xvar names are not consistent with the actual names needed. And for both conditional, unconditional and FVA the scenario xvars are the same but different names. You need to check “CCAR-Status-20170103.xlsx” Stress tab for detailed naming convention.
+cdsoncdo.list
+Need to copy updated EOD files from UAT, for example for 2017 Q1 there are two EOD files.
+NY-GSM-ABCDS-BASE-EOD-20170510013929
+NY-GSM-ABCDS-BASE-EOD-20170510021751
+
+snapshot.list
+Then redo snapshot based on updated EOD files, for example:
+GSM_PRA_INT1,NY-GSM-ABCDS-BASE-EOD-20170510021751
+GSM_PRA_INT2,NY-GSM-ABCDS-BASE-EOD-20170510021751
+GSM_PRA_REGU,NY-GSM-ABCDS-BASE-EOD-20170510013929
+report.list and report*.sql
+Each time the report query is different you need to configure it based on need.
+Support Volatility Shock
+Please note that volatility shocks are never included in CCAR run even the shock files have been provided since 2016 mid-year CCAR.  Starting from 2017 mid-year CCAR we should include them. However there is no easy way to support volatility but a workaround that requires trade xvar structure change and scenario xvar change. 
+For those trade xvars that have index option trades, need to put the trades to the same level as netting set, then add the trade id and tenor to scenario xvar. For example:
+Before change, trades only appear under ListSecurities.
+<XVar Type="Dictionary">
+	<XVar Id="CBNA-02-ABINCF-F-4~1" Type="Dictionary">
+		<XVar Id="ListSecurities" Type="Dictionary">
+			<XVar Id="36447642AC2" Type="Dictionary">
+				<XVar Id="ID" Type="String" Value="36447642AC2" />
+				<XVar Id="IndexCreditCurve" Type="String" Value="470402" />
+				<XVar Id="VolCubes" Type="String" Value="470402_Vol" />
+				<XVar Id="Security" Type="Dictionary">
+					<XVar Id="CDSIndexSecurity" Type="Dictionary">
+						<XVar Id="Tenor" Type="Date" Value="20211220" />
+					</XVar>
+				</XVar>
+			</XVar>
+		</XVar>
+	</XVar>
+</XVar>
+
+After Change, the index option trades must be copied to the same level as netting set.
+<XVar>
+	<XVar Id="CBNA-02-ABINCF-F-4~1" Type="Dictionary">
+		<XVar Id="ListSecurities" Type="Dictionary">
+			<XVar Id="36447642AC2" Type="Dictionary">
+				<XVar Id="ID" Type="String" Value="36447642AC2" />
+				<XVar Id="IndexCreditCurve" Type="String" Value="470402" />
+				<XVar Id="VolCubes" Type="String" Value="470402_Vol" />
+				<XVar Id="Security" Type="Dictionary">
+					<XVar Id="CDSIndexSecurity" Type="Dictionary">
+						<XVar Id="Tenor" Type="Date" Value="20211220" />
+					</XVar>
+				</XVar>
+			</XVar>
+		</XVar>
+	</XVar>
+	<XVar Id="36447642AC2" Type="Dictionary">
+		<XVar Id="ID" Type="String" Value="36447642AC2" />
+		<XVar Id="IndexCreditCurve" Type="String" Value="470402" />
+		<XVar Id="VolCubes" Type="String" Value="470402_Vol" />
+		<XVar Id="Security" Type="Dictionary">
+			<XVar Id="CDSIndexSecurity" Type="Dictionary">
+				<XVar Id="Tenor" Type="Date" Value="20211220" />
+			</XVar>
+		</XVar>
+	</XVar>
+</XVar>
+
+Then, in scenario xvars, the volatility shock should be appended for that curve and the trade id and tenor should be included as following:
+<Row Id="60">
+	<Col Id="0" Type="Dictionary">
+		<XVar Id="MktDataType" Type="String" Value="VOLCUBE" />
+		<XVar Id="MktDataName" Type="String" Value="VolCube.470402_Vol" />
+		<XVar Id="Query" Type="Dictionary">
+			<XVar Id="Terms" Type="String" Value="ALL" />
+		</XVar>
+		<XVar Id="Manipulator" Type="Dictionary">
+			<XVar Id="TradeID" Type="String" Value="36447642AC2" />
+			<XVar Id="Tenors" Type="String" Value="20211220" />
+			<XVar Id="Bumps" Type="Multi" Value="" Rows="4" Columns="9">
+				<Row Id="0">
+					<Col Id="0" Type="String" Value="0.85" />
+					... (shocks provided by Trade CCAR team)
+				</Row>
+			</XVar>
+		</XVar>
+	</Col>
+</Row>
+
+
+There is a tool to handle this.
+After stress scenario xvars are generated by 155818_CVA_CCAR_STRESS_GENERATE_SCENARIO_GCM, follow below steps to update the trade xvars and scenario xvars.
+1.	Go to marsap1u: /var/opt/pt/data/ccar/vol
+2.	Update /opt/CorrelationMarsClient/current/bin/155818_CVA_CCAR_STRESS_ADD_VOL_DO.ksh,
+for example 
+scen=BHCSAMS
+snapshot=COND_MPOR_BHCS
+In this example, it will first find out index option trade xvars under /apps/var/opt/155818-marsabsgrid/MARS_CVA/xvars/eod/20170103/snapshot_COND_MPOR_BHCS, then update the trade xvars to /var/opt/pt/data/ccar/vol/snapshot_COND_MPOR_BHCS.  After that, find all scenario xvars under /var/opt/pt/data/ccar/cva/scenarios/20170103/BHCSAMS to be appended volatility shocks, update them and save to /var/opt/pt/data/ccar/vol/scenarios/20170103/BHCSAMS.
+3.	Run 155818_CVA_CCAR_STRESS_ADD_VOL_GCM
+4.	Copy the updated trade xvars and scenario xvars to override the original ones.
+References
+RC and CCAR Documentation.docx
+https://collaborate.citi.net/docs/DOC-508854
+CCAR Automation V4.pptx 
+https://collaborate.citi.net/docs/DOC-508792
+CCAR-Status-20170103.xlsx 
+https://collaborate.citi.net/docs/DOC-508791

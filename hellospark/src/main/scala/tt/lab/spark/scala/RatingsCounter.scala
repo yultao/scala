@@ -1,4 +1,5 @@
-package tt.lab.scala.spark
+package tt.lab.spark.scala
+
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
@@ -9,7 +10,7 @@ object RatingsCounter {
  
   /** Our main function where the action happens */
   def main(args: Array[String]) {
-   
+    Utils.setHadoopHome
     // Set the log level to only print errors
     Logger.getLogger("org").setLevel(Level.ERROR)
         
@@ -17,7 +18,7 @@ object RatingsCounter {
     val sc = new SparkContext("local[*]", "RatingsCounter")
    
     // Load up each line of the ratings data into an RDD
-    val lines = sc.textFile("data/ratings.csv")
+    val lines = sc.textFile("data/ml-latest-small/ratings.csv")
     
     // Convert each line to a string, split it out by tabs, and extract the third field.
     // (The file format is userID, movieID, rating, timestamp)
