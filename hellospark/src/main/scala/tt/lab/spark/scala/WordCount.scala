@@ -1,36 +1,29 @@
 package tt.lab.spark.scala
+import org.apache.spark._
+import org.apache.spark.SparkContext._
+import org.apache.log4j._
 
-import org.apache.spark.SparkContext
-
-object WordCount {
+/** Count up how many of each word appears in a book as simply as possible. */
+object WordCountSimple {
+  /** Our main function where the action happens */
   def main(args: Array[String]) {
     Utils.setHadoopHome
+    // Set the log level to only print errors
+    Logger.getLogger("org").setLevel(Level.ERROR)
+
+    // Create a SparkContext using every core of the local machine
     val sc = new SparkContext("local[*]", "WordCount")
-    val lines = sc.textFile("data/wordcount.txt")
-    println(lines.count())
-    println("raw lines: ")
-    lines.take(5).foreach { println}
-    
-    val words = lines.flatMap(x => x.toString().split("\\W+"))
-    
-    println("\nsplit words:")
-    words.take(5).foreach(println)
-    
-    
-    println("\nword map:")
-    val wordmap = words.map { x => (x,1) }
-    
-    wordmap.take(5).foreach(println)
-    
+
+    // Read each line of my book into an RDD
+    val input = sc.textFile("data/wordcount.txt")
+
+    // Split into words separated by a space character
+    val words = input.flatMap(x => x.split(" "))
+
+    // Count up the occurrences of each word
     val wordCounts = words.countByValue()
-    
-    
-    println("\nresults:")
-    wordCounts.take(5).foreach(println)
 
-
-    println(wordCounts.take(2).mkString(","))
-    
-    
+    // Print the results.
+    wordCounts.foreach(println)
   }
 }

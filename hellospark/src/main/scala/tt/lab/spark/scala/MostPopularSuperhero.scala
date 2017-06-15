@@ -9,7 +9,7 @@ object MostPopularSuperhero {
   
   // Function to extract the hero ID and number of connections from each line
   def countCoOccurences(line: String) = {
-    var elements = line.split("\\s+")
+    var elements = line.split("\\s+")//white spaces: tab, space...
     ( elements(0).toInt, elements.length - 1 )
   }
   
@@ -34,7 +34,9 @@ object MostPopularSuperhero {
     
     // Build up a hero ID -> name RDD
     val names = sc.textFile("data/marvel-names.txt")
-    val namesRdd = names.flatMap(parseNames)
+    val namesRdd = names.flatMap(parseNames) // Why use flatMap instead of map?
+    
+    namesRdd.take(3).foreach(println)
     
     // Load up the superhero co-apperarance data
     val lines = sc.textFile("data/marvel-graph.txt")
@@ -50,14 +52,14 @@ object MostPopularSuperhero {
     // Flip it to # of connections, hero ID
     val flipped = totalFriendsByCharacter.map( x => (x._2, x._1) )
     
-    // Find the max # of connections
+    // Find the max # of connections -- based on the key
     val mostPopular = flipped.max()
     
     // Look up the name (lookup returns an array of results, so we need to access the first result with (0)).
     val mostPopularName = namesRdd.lookup(mostPopular._2)(0)
     
     // Print out our answer!
-    println(s"$mostPopularName is the most popular superhero with ${mostPopular._1} co-appearances.") 
+    println(s"$mostPopularName ($mostPopular._2) is the most popular superhero with ${mostPopular._1} co-appearances.") 
   }
   
 }
