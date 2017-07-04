@@ -1,0 +1,4 @@
+this is a file that will be opened by scala io.
+second line
+3rd
+last line

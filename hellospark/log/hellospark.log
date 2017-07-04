@@ -1,0 +1,233 @@
+2017-06-29 16:49:48 ERROR StreamingContext:91 - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:224)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:163)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:512)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:572)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:571)
+	at tt.lab.spark.scala.KafkaStreaming$.main(KafkaStreaming.scala:57)
+	at tt.lab.spark.scala.KafkaStreaming.main(KafkaStreaming.scala)
+2017-06-29 16:50:58 ERROR StreamingContext:91 - Error starting the context, marking it as stopped
+java.lang.IllegalArgumentException: requirement failed: No output operations registered, so nothing to execute
+	at scala.Predef$.require(Predef.scala:224)
+	at org.apache.spark.streaming.DStreamGraph.validate(DStreamGraph.scala:163)
+	at org.apache.spark.streaming.StreamingContext.validate(StreamingContext.scala:512)
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:572)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:571)
+	at tt.lab.spark.scala.KafkaStreaming$.main(KafkaStreaming.scala:59)
+	at tt.lab.spark.scala.KafkaStreaming.main(KafkaStreaming.scala)
+2017-06-29 16:53:15 ERROR StreamingContext:91 - Error starting the context, marking it as stopped
+org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:702)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+	at ... run in separate thread using org.apache.spark.util.ThreadUtils ... ()
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:577)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:571)
+	at tt.lab.spark.scala.KafkaStreaming$.main(KafkaStreaming.scala:59)
+	at tt.lab.spark.scala.KafkaStreaming.main(KafkaStreaming.scala)
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	GenericDataModel cannot be resolved to a type
+	TProtocolFactory cannot be resolved to a type
+	TBinaryProtocol cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	GenericMessage cannot be resolved to a type
+	GenericMessage cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	MirrorlakeConsumer cannot be resolved
+
+	at tt.lab.spark.scala.GDMDeserializer.<init>(GDMDeserializer.java:3)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at java.lang.Class.newInstance(Class.java:442)
+	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:314)
+	at org.apache.kafka.common.config.AbstractConfig.getConfiguredInstance(AbstractConfig.java:201)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:671)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2017-06-29 17:33:49 ERROR StreamingContext:91 - Error starting the context, marking it as stopped
+org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:702)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+	at ... run in separate thread using org.apache.spark.util.ThreadUtils ... ()
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:577)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:571)
+	at tt.lab.spark.scala.KafkaStreaming$.main(KafkaStreaming.scala:59)
+	at tt.lab.spark.scala.KafkaStreaming.main(KafkaStreaming.scala)
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import com.citi cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	The import org.apache.thrift cannot be resolved
+	GenericDataModel cannot be resolved to a type
+	TProtocolFactory cannot be resolved to a type
+	TBinaryProtocol cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	GenericMessage cannot be resolved to a type
+	GenericMessage cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	GenericDataModel cannot be resolved to a type
+	MirrorlakeConsumer cannot be resolved
+
+	at tt.lab.spark.scala.GDMDeserializer.<init>(GDMDeserializer.java:3)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at java.lang.Class.newInstance(Class.java:442)
+	at org.apache.kafka.common.utils.Utils.newInstance(Utils.java:314)
+	at org.apache.kafka.common.config.AbstractConfig.getConfiguredInstance(AbstractConfig.java:201)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:671)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2017-06-30 09:24:12 ERROR StreamingContext:91 - Error starting the context, marking it as stopped
+org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:702)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+	at ... run in separate thread using org.apache.spark.util.ThreadUtils ... ()
+	at org.apache.spark.streaming.StreamingContext.liftedTree1$1(StreamingContext.scala:577)
+	at org.apache.spark.streaming.StreamingContext.start(StreamingContext.scala:571)
+	at tt.lab.spark.scala.KafkaStreaming$.main(KafkaStreaming.scala:59)
+	at tt.lab.spark.scala.KafkaStreaming.main(KafkaStreaming.scala)
+Caused by: org.apache.kafka.common.config.ConfigException: Invalid url in bootstrap.servers: xx
+	at org.apache.kafka.clients.ClientUtils.parseAndValidateAddresses(ClientUtils.java:45)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:620)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:557)
+	at org.apache.kafka.clients.consumer.KafkaConsumer.<init>(KafkaConsumer.java:540)
+	at org.apache.spark.streaming.kafka010.Subscribe.onStart(ConsumerStrategy.scala:83)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.consumer(DirectKafkaInputDStream.scala:75)
+	at org.apache.spark.streaming.kafka010.DirectKafkaInputDStream.start(DirectKafkaInputDStream.scala:243)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at org.apache.spark.streaming.DStreamGraph$$anonfun$start$5.apply(DStreamGraph.scala:49)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach_quick(ParArray.scala:143)
+	at scala.collection.parallel.mutable.ParArray$ParArrayIterator.foreach(ParArray.scala:136)
+	at scala.collection.parallel.ParIterableLike$Foreach.leaf(ParIterableLike.scala:972)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply$mcV$sp(Tasks.scala:49)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$$anonfun$tryLeaf$1.apply(Tasks.scala:48)
+	at scala.collection.parallel.Task$class.tryLeaf(Tasks.scala:51)
+	at scala.collection.parallel.ParIterableLike$Foreach.tryLeaf(ParIterableLike.scala:969)
+	at scala.collection.parallel.AdaptiveWorkStealingTasks$WrappedTask$class.compute(Tasks.scala:152)
+	at scala.collection.parallel.AdaptiveWorkStealingForkJoinTasks$WrappedTask.compute(Tasks.scala:443)
+	at scala.concurrent.forkjoin.RecursiveAction.exec(RecursiveAction.java:160)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+2017-06-30 14:39:15 FATAL MirrorlakeConfigurationFactory:113 - load CCS properties mirrorlake-client-UAT.properties failed com.citi.mirrorlake.common.exception.CCSException: Get null properties, please check configuration service.
+2017-06-30 14:39:15 FATAL MirrorlakeConfigurationFactory:86 - load CCS properties mirrorlake-authority-directory.properties failed com.citi.mirrorlake.common.exception.CCSException: Get null properties, please check configuration service.
