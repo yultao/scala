@@ -3,14 +3,15 @@ package tt.lab.spark.scala
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
 
-object WordCount {
+object WordCountHome {
   def main(args: Array[String]) {
     Utils.setHadoopHome
     
 //    val sc = new SparkContext("local[*]", "WordCount")
     val conf = new SparkConf().setAppName("WordCount")
     val sc = new SparkContext(conf)
-    val lines = sc.textFile("hdfs://centosa:9000//user/hadoop/wordcount.txt")
+//    val lines = sc.textFile("hdfs://centosa:9000//user/hadoop/wordcount.txt")
+    val lines = sc.textFile("/user/hadoop/wordcount.txt")
     println(lines.count())
     println("raw lines: ")
     lines.take(5).foreach { println}

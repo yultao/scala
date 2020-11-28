@@ -1,0 +1,1 @@
+spark-submit --class tt.lab.spark.scala.WordCountHome --master yarn --deploy-mode cluster target/hellospark-0.0.1-SNAPSHOT.jar
