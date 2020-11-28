@@ -1,9 +1,10 @@
-package tt.lab.spark.scala
+package tt.lab.spark.sql
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
 import org.apache.spark.sql._
 import org.apache.log4j._
+import tt.lab.spark.scala.Utils
 
 object SparkSQL {
   

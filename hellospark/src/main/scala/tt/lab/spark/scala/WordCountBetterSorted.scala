@@ -45,7 +45,7 @@ object WordCountBetterSorted {
       println(s"$word: $count")
     }
 //    wordCountsSorted.saveAsTextFile("output/wordcount")
-    wordCountsSorted.saveAsTextFile("hdfs://gxslnx1u.nam.nsroot.net:9000/user/nelly/cva/CVA_LITE_BASE/TEMP/TEST")
+    wordCountsSorted.saveAsTextFile("hdfs://gxslnx2u.nam.nsroot.net:8889/user/nelly/cva/CVA_LITE_BASE/TEMP/TEST")
   }
 
 }
